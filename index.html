@@ -15,7 +15,6 @@
     <script type="text/javascript">
         // this is where the word repository is
         var gameDictionary = ["Zebra", "other", "whatever", "another", "somemore", "unomas"];
-        
         // This randomly picks a word from the gameDictionary
         var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
         console.log("computer guess: " + computerGuessWord);
@@ -24,24 +23,31 @@
         var underscored = computerGuessWord.replace(/./g, '_ ');
         console.log(underscored)
 
+        // putting word in temp array so I can see if the eventkey matches something in this array
+        // will likely have to move it into one of the loops or functions so it's replaced with new word
+        var tempArray = []
+        for (var i = 0; i < computerGuessWord.length; i++) {
+            tempArray.push(computerGuessWord.charAt(i));
+
+        }
+        console.log(tempArray)
+
         // this is a for loop that looks at the letters that make up the word
         for (var i = 0; i < computerGuessWord.length; i++) {
             // here I'm printing all the letters that make up the word
             console.log("the letters: " + computerGuessWord[i]);
-            // here I target the game div
+            // here I target the "game" div
             var targetDiv = document.getElementById("game");
             // I textContent the target div with my underscored word
             targetDiv.textContent = underscored;
-
-            // Whenever a key is pressed, alert "pressed a button".
-            document.onkeyup = function () {
-                alert("pressed a button");
-                // Determines which key was pressed.
-                var userGuess = event.key;
+        }
 
 
-
-            }
+        // Whenever a key is pressed, alert "pressed a button".
+        document.onkeyup = function () {
+            alert("pressed a button");
+            // Determines which key was pressed.
+            var userGuess = event.key;
 
         };
     </script>
