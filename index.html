@@ -20,11 +20,20 @@
             var gameDictionary = ["Zebra", "other", "whatever", "another", "somemore", "unomas"];
             // Determines which key was pressed.
             var userGuess = event.key;
-
+            // This randomly picks a word from the gameDictionary
             var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
-            console.log("basic computer guess" + computerGuessWord);
+            console.log("basic computer guess: " + computerGuessWord);
+
+
+            // this is a for loop that looks at the letters that make up the word
             for (var i = 0; i < computerGuessWord.length; i++) {
+                // here I'm printing all the letters that make up the word
                 console.log("the letters: " + computerGuessWord[i]);
+                // here I get the game div so I know where to right to
+                var targetDiv = document.getElementById("game");
+
+                // to our selected div I will add text content, which will be our randomly picked word
+                targetDiv.textContent = computerGuessWord;
             }
 
         };
