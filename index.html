@@ -14,6 +14,7 @@
         <div id="lettersGuessed"></div>
         <div id="guessesLeft"></div>
         <div id="word"></div>
+        <div id="revealedAnswerDisplay"></div>
 
     </div>
 
@@ -21,13 +22,12 @@
         // this is where the word repository is
         var gameDictionary = ["zebra", "other", "whatever", "another", "somemore", "unomas"];
 
-        // This randomly picks a word from the gameDictionary
-        var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
-        console.log("computer guess: " + computerGuessWord);
+        // generates random number
+        var randomNumber = Math.floor(Math.random() * gameDictionary.length);
 
-        // this replaces the letters in the word with underscores
-        var underscored = computerGuessWord.replace(/./g, '_ ');
-        console.log(underscored)
+        //Apply rand numb to obtain word in gamedict array
+        var computerGuessWord = gameDictionary[randomNumber];
+        console.log("computer guess: " + computerGuessWord);
 
         //Establishing lettersRemaining for winning;
         var lettersRemaining = computerGuessWord.length;
@@ -37,25 +37,9 @@
         var tempArray = []
 
         // this is my start/stop controller between questions, maybe   
-        var gameStatus = true;
+        var gameStatus = false;
 
-        // var tempArray = []
-        // for (var i = 0; i < computerGuessWord.length; i++) {
-        //     tempArray.push(computerGuessWord.charAt(i));
-        // }
-        // console.log(tempArray)
-
-
-        // this is a for loop that looks at the letters that make up the word
-        for (var i = 0; i < computerGuessWord.length; i++) {
-            // here I'm printing all the letters that make up the word
-            console.log("the letters: " + computerGuessWord[i]);
-            // here I target the "game" div
-            var targetDiv = document.getElementById("game");
-            // I textContent the target div with my underscored word
-            targetDiv.textContent = underscored;
-        }
-
+        // ---------------------------------------
 
         // using key events to listen for the letters that the players will type
         document.addEventListener("keyup", function (event) {
@@ -64,7 +48,7 @@
                 letterCheck(event);
             } else {
                 // if gameStatushas completed, I'm going to re-init the game
-                // init();
+                init();
             }
         });
 
@@ -75,7 +59,7 @@
             // if letter key is press, check if the letter pressed is in the answer
             if (alphabetArray.indexOf(guess.key) > -1) {
                 correctGuessCheck(guess);
-                console.log("my guess: " + guess)
+                console.log("my guess: " + guess.key)
             }
         }
 
@@ -88,7 +72,7 @@
                 correctGuess(guess);
             } else {
                 // if guess is incorrect, run incorrectGuess function.
-                // incorrectGuess(guess);
+                incorrectGuess(guess);
                 console.log("the guess is incorrect!")
             }
         }
@@ -101,9 +85,9 @@
         }
 
         function addCorrectLetter(guess) {
-            for (var j = 0; j < gameDictionary.length; j++) {
+            for (var j = 0; j < computerGuessWord.length; j++) {
                 // if guess matches an existing letter in the answer.
-                if (guess.key === gameDictionary[j]) {
+                if (guess.key === computerGuessWord[j]) {
                     // push correct letter to tempArray as upperCase.
                     tempArray[j] = guess.key.toUpperCase();
                     displayCurrentWord();
@@ -115,13 +99,14 @@
                         winScore++;
                         //Display new win score.
                         displayWins();
+                        addCorrectLetter
 
                     }
                 }
             }
         }
 
-        // set up an incorrect answer array
+        // incorrect answer array
         var incorrectGuessesMade = [];
         // default guesses
         var guessesLeft = 9;
@@ -134,23 +119,113 @@
         }
 
         function addIncorrectLetter(guess) {
-            // push incorrect guess into the incorrectGuessesMade array
+            //Push incorrect guess into the incorrectGuessesMade array
             incorrectGuessesMade.push(guess.key.toUpperCase());
-            // display the incorrect guesses made
+            //Inform user of incorrectGuessesMade
             displayGuessesMade();
-            // guesses left -1
+            //Lower guessesLeft by 1
             guessesLeft--;
-            // display guesses left
+            //Inform user of guessesLeft
             displayGuessesLeft();
             if (guessesLeft === 0) {
-                // if the guesses = 0 end game
+                //If guesses left reaches equals 0, then Game Over.
                 changeImage();
-                // display answer
+                //Display corrent answer.
                 displayAnswer();
             }
         }
 
-        
+// ---------------------
+
+        // displays the number of wins
+        function displayWins() {
+            var winsDisplay = document.querySelector("#wins");
+            winsDisplay.textContent = winScore;
+        }
+
+        // display the letters the user has guessed.
+        function displayGuessesMade() {
+            var guessesMadeDisplay = document.querySelector("#lettersGuessed");
+            guessesMadeDisplay.textContent = incorrectGuessesMade.join(", ");
+        }
+
+        // display how many guesses left
+        function displayGuessesLeft() {
+            var guessesLeftDisplay = document.querySelector("#guessesLeft");
+            guessesLeftDisplay.textContent = guessesLeft;
+        }
+
+        // display how the letter looks
+        function displayCurrentWord() {
+            var currentWordDisplay = document.querySelector("#word");
+            currentWordDisplay.innerHTML = tempArray.join(" ");
+        }
+
+        // reveals answer if run out of guesses
+        function displayAnswer() {
+            var revealedAnswerDisplay = document.querySelector("#revealedAnswerDisplay");
+            revealedAnswerDisplay.textContent = computerGuessWord.toUpperCase();
+        }
+
+        function addCorrect() {
+            var currentWordDisplay = document.querySelector("#word");
+            currentWordDisplay.classList.add('correct');
+        }
+
+        //Removes green color of current word (for re-initalizing purposes)
+        function removeCorrect() {
+            var currentWordDisplay = document.querySelector("#currentWordDisplay");
+            currentWordDisplay.classList.remove('correct');
+        }
+
+
+        function init() {
+            // this is going to change the status to ready 
+            gameStatus = true;
+
+            // generate a new random number for picking from gamedict
+            randomNumber = Math.floor(Math.random() * gameDictionary.length);
+
+            // tie new randomNumber to word in gamedict
+            computerGuessWord = gameDictionary[randomNumber];
+            console.log(computerGuessWord)
+
+            // re-do the letters
+            lettersRemaining = gameDictionary.length;
+
+            // reset teh answer array
+            tempArray = [];
+
+            //Convert word answer into an array.
+            for (var i = 0; i < computerGuessWord.length; i++) {
+                //If an answer has more than one word, use + as a separator. A space will be displayed when currentWord is displayed. Not applicable for this particlar game, but here for flexibility
+                if (computerGuessWord[i] === "+") {
+                    tempArray[i] = "&nbsp;";
+                } else {
+                    //Replace word answer with "_"s
+                    tempArray[i] = "_";
+                }
+            }
+
+            // re-do lettersRemaining 
+            lettersRemaining = computerGuessWord.length;
+
+            // re-do guessesLeft for user.
+            guessesLeft = 9;
+            displayGuessesLeft()
+
+            // re-do guessesMade array.
+            incorrectGuessesMade = [];
+            displayGuessesMade()
+
+            // display the current word
+            displayCurrentWord();
+
+            // empty revealedAnswer display if user was unsuccessful previously.
+            revealedAnswerDisplay.textContent = "";
+
+        }
+
 
     </script>
 
