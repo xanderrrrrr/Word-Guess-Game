@@ -17,14 +17,15 @@
         document.onkeyup = function () {
             alert("pressed a button");
             // this is where the word repository is
-            var gameDictionary = ["Zebra","other","whatever"];
+            var gameDictionary = ["Zebra", "other", "whatever", "another", "somemore", "unomas"];
             // Determines which key was pressed.
             var userGuess = event.key;
 
-            var computerGuess = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
-
-
-            console.log(computerGuess);
+            var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
+            console.log("basic computer guess" + computerGuessWord);
+            for (var i = 0; i < computerGuessWord.length; i++) {
+                console.log("the letters: " + computerGuessWord[i]);
+            }
 
         };
     </script>
