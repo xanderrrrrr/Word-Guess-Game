@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Word Guess Game</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div id="game">
+
+    </div>
+
+    <script type="text/javascript">
+        // Whenever a key is pressed, alert "pressed a button".
+        document.onkeyup = function () {
+            alert("pressed a button");
+            // this is where the word repository is
+            var gameDictionary = ["Zebra","other","whatever"];
+            // Determines which key was pressed.
+            var userGuess = event.key;
+
+            var computerGuess = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
+
+
+            console.log(computerGuess);
+
+        };
+    </script>
+
+</body>
+
+</html>
