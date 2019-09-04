@@ -14,7 +14,7 @@
 
     <script type="text/javascript">
         // this is where the word repository is
-        var gameDictionary = ["Zebra", "other", "whatever", "another", "somemore", "unomas"];
+        var gameDictionary = ["zebra", "other", "whatever", "another", "somemore", "unomas"];
         // This randomly picks a word from the gameDictionary
         var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
         console.log("computer guess: " + computerGuessWord);
@@ -48,6 +48,12 @@
             alert("pressed a button");
             // Determines which key was pressed.
             var userGuess = event.key;
+            if (tempArray.includes(userGuess)) {
+                console.log("true");
+            }
+            else {
+                console.log("false");
+            }
 
         };
     </script>
