@@ -13,29 +13,31 @@
     </div>
 
     <script type="text/javascript">
-        // Whenever a key is pressed, alert "pressed a button".
-        document.onkeyup = function () {
-            alert("pressed a button");
-            // this is where the word repository is
-            var gameDictionary = ["Zebra", "other", "whatever", "another", "somemore", "unomas"];
-            // Determines which key was pressed.
-            var userGuess = event.key;
-            // This randomly picks a word from the gameDictionary
-            var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
-            console.log("basic computer guess: " + computerGuessWord);
+        // this is where the word repository is
+        var gameDictionary = ["Zebra", "other", "whatever", "another", "somemore", "unomas"];
+        
+        // This randomly picks a word from the gameDictionary
+        var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
+        console.log("computer guess: " + computerGuessWord);
 
-            var underscored = computerGuessWord.replace(/./g, '_ ');
-            console.log(underscored)
-            // this is a for loop that looks at the letters that make up the word
-            for (var i = 0; i < computerGuessWord.length; i++) {
-                // here I'm printing all the letters that make up the word
-                console.log("the letters: " + computerGuessWord[i]);
+        // this replaces the letters in the word with underscores
+        var underscored = computerGuessWord.replace(/./g, '_ ');
+        console.log(underscored)
 
-                var targetDiv = document.getElementById("game");
-                targetDiv.textContent = underscored;
+        // this is a for loop that looks at the letters that make up the word
+        for (var i = 0; i < computerGuessWord.length; i++) {
+            // here I'm printing all the letters that make up the word
+            console.log("the letters: " + computerGuessWord[i]);
+            // here I target the game div
+            var targetDiv = document.getElementById("game");
+            // I textContent the target div with my underscored word
+            targetDiv.textContent = underscored;
 
-
-
+            // Whenever a key is pressed, alert "pressed a button".
+            document.onkeyup = function () {
+                alert("pressed a button");
+                // Determines which key was pressed.
+                var userGuess = event.key;
 
 
 
