@@ -24,17 +24,17 @@
             var computerGuessWord = gameDictionary[Math.floor(Math.random() * gameDictionary.length)];
             console.log("basic computer guess: " + computerGuessWord);
 
-
+            var underscored = computerGuessWord.replace(/./g, '_ ');
+            console.log(underscored)
             // this is a for loop that looks at the letters that make up the word
             for (var i = 0; i < computerGuessWord.length; i++) {
                 // here I'm printing all the letters that make up the word
                 console.log("the letters: " + computerGuessWord[i]);
 
                 var targetDiv = document.getElementById("game");
+                targetDiv.textContent = underscored;
 
-                var newDiv = document.createElement("p");
-                newDiv.textContent = computerGuessWord[i];
-                targetDiv.appendChild(newDiv);
+
 
 
 
